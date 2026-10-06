@@ -53,7 +53,7 @@ await tasks.create({ title: "Call plumber" });
 
 ### MCP server
 
-Build from this repo. **Never `npx tc-mcp`**: that npm name is an unrelated project. Needs Node.js 20+ (LTS from nodejs.org) and Git.
+Build from this repo. **Never `npx tc-mcp`**: that npm name is an unrelated project. Needs Node.js 20+ (LTS from nodejs.org). **Windows:** Download ZIP, extract, right-click `setup.ps1` → Run with PowerShell (no Git needed). **Mac:**
 
 ```bash
 git clone https://github.com/detroitsection8/tenantcloud-mcp.git ~/tools/tenantcloud-mcp

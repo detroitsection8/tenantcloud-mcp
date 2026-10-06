@@ -1,16 +1,33 @@
-# Team setup: TenantCloud in Claude Code
+# Team setup: TenantCloud in Claude
 
 This is our private copy of an unofficial TenantCloud connector (originally by Eric Ma, `ericmanyc/tenantcloud-client-ts`). It was reviewed on 2026-10-05.
 
-**Do not** use `npx tc-mcp`, which you'll see in the README and online. That name on npm belongs to an unrelated project. Only install from this repo.
+**Do not** use `npx tc-mcp`, which you may see online. That name on npm belongs to an unrelated project. Only install from this repo.
 
 ## Before you start
 
-- A Mac with **Claude Code** installed
-- Access to this GitHub repo (ask Kirtan)
+- Access to this GitHub repo (ask Kirtan, then accept the email invitation)
+- The **Claude desktop app** or **Claude Code** installed
+- **Node.js**: download the **LTS** version from [nodejs.org](https://nodejs.org) and install it with the default options
 - Your **own TenantCloud team login**. Don't use anyone else's.
 
-## Setup (about 5 minutes)
+## Windows setup (about 5 minutes)
+
+You don't need Git.
+
+1. On this repo's GitHub page, click the green **Code** button, then **Download ZIP**.
+2. Open your Downloads folder, right-click the ZIP, and choose **Extract All**.
+3. Move the extracted folder somewhere permanent, for example `C:\Users\<you>\tools\tenantcloud-mcp`. **Leave it there afterwards:** Claude runs the tool from this folder, so moving or deleting it breaks the connection.
+4. Open the folder, right-click **`setup.ps1`**, and choose **Run with PowerShell**.
+   - If Windows asks whether to run it, choose **Open** / **Run anyway**.
+   - If nothing happens, open PowerShell and run this, adjusting the path if you put the folder elsewhere:
+     ```powershell
+     powershell -ExecutionPolicy Bypass -File "$HOME\tools\tenantcloud-mcp\setup.ps1"
+     ```
+5. The script builds the tool, connects it to Claude, and opens a TenantCloud sign-in window (in Edge or Chrome). Sign in as usual. Your login is saved in Windows Credential Manager.
+6. **Fully quit Claude** (right-click its icon by the clock → Quit), then reopen it.
+
+## Mac setup (about 5 minutes)
 
 Open Terminal and paste these two commands, one at a time:
 
@@ -22,16 +39,16 @@ git clone https://github.com/detroitsection8/tenantcloud-mcp.git ~/tools/tenantc
 bash ~/tools/tenantcloud-mcp/setup.sh
 ```
 
-If GitHub asks you to sign in during the first command, sign in with your GitHub account.
+If GitHub asks you to sign in, use your GitHub account. If the Mac offers to install developer tools for `git`, click **Install**, then run the first command again. The script opens a TenantCloud sign-in window, and your login is saved in your Mac's Keychain. Then fully quit Claude Code (Cmd+Q) and reopen it.
 
-The second command checks your computer, builds the tool, connects it to Claude Code, and opens a TenantCloud sign-in window. Sign in as usual. Your login is saved in your Mac's Keychain.
+## Check it worked
 
-Then **fully quit Claude Code (Cmd+Q)** and reopen it.
+Ask Claude: *"How many properties do we have in TenantCloud?"*
 
-If the script stops with a message (for example "Node.js isn't installed"), do what it says, then run the second command again.
+If a script stops with a message (for example "Node.js isn't installed"), do what it says, then run the script again.
 
 ## Ground rules
 
 - The tool acts as **you** in TenantCloud, and it can make real changes (payments, leases, messages, deletions). Have Claude show you what it will do before anything is changed.
-- Logged out? Run `node ~/tools/tenantcloud-mcp/packages/mcp/dist/cli.js login`.
-- Updates: pull the latest code (`cd ~/tools/tenantcloud-mcp && git pull`), then run `bash setup.sh` again.
+- Logged out? Run the setup script again. It's safe to re-run.
+- Updates: download the new ZIP (Windows) or run `git pull` in the folder (Mac), then run the setup script again.
