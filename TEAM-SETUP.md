@@ -18,11 +18,11 @@ You don't need Git.
 1. On this repo's GitHub page, click the green **Code** button, then **Download ZIP**.
 2. Open your Downloads folder, right-click the ZIP, and choose **Extract All**.
 3. Move the extracted folder somewhere permanent, for example `C:\Users\<you>\tools\tenantcloud-mcp`. **Leave it there afterwards:** Claude runs the tool from this folder, so moving or deleting it breaks the connection.
-4. Open the folder, right-click **`setup.ps1`**, and choose **Run with PowerShell**.
-   - If Windows asks whether to run it, choose **Open** / **Run anyway**.
-   - If nothing happens, open PowerShell and run this, adjusting the path if you put the folder elsewhere:
+4. Open the folder and **double-click `setup-windows.cmd`**.
+   - If a blue "Windows protected your PC" box appears, click **More info** → **Run anyway**.
+   - If that doesn't work, open PowerShell from the Start menu and paste this (adjust the path if your folder is elsewhere):
      ```powershell
-     powershell -ExecutionPolicy Bypass -File "$HOME\tools\tenantcloud-mcp\setup.ps1"
+     Get-ChildItem "$HOME\tools\tenantcloud-mcp" -Recurse | Unblock-File; powershell -ExecutionPolicy Bypass -File "$HOME\tools\tenantcloud-mcp\setup.ps1"
      ```
 5. The script builds the tool, connects it to Claude, and opens a TenantCloud sign-in window (in Edge or Chrome). Sign in as usual. Your login is saved in Windows Credential Manager.
 6. **Fully quit Claude** (right-click its icon by the clock → Quit), then reopen it.
