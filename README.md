@@ -1,3 +1,6 @@
+> ## ⚠️ Detroit Section 8 team: read [TEAM-SETUP.md](TEAM-SETUP.md) instead
+> This is our private, reviewed copy. **Do not run `npx tc-mcp`** (anywhere below or online). That npm name belongs to an unrelated project, not this code. Install only by building from this repo with `setup.sh`, as TEAM-SETUP.md explains.
+
 # tenantcloud-client-ts
 
 TypeScript client library and MCP server for [TenantCloud](https://tenantcloud.com), a rental property management platform. A port of [yllibed/TenantCloudClient](https://github.com/yllibed/TenantCloudClient) (C#/.NET), extended well beyond parity.
@@ -53,7 +56,7 @@ await tasks.create({ title: "Call plumber" });
 One command (needs Node 20+):
 
 ```bash
-npx tc-mcp install claude-code   # or: claude-desktop
+# DO NOT use npx tc-mcp (wrong package on npm). See TEAM-SETUP.md
 ```
 
 Restart Claude Code and ask things like "who owes rent?", "message the lead who inquired yesterday", or "create a maintenance request for unit 3B". The first time, the agent notices you are not signed in and offers to open a TenantCloud sign-in window (normal password + 2FA); tokens go to your OS credential store. To sign in ahead of time instead: `npx tc-mcp login`.
