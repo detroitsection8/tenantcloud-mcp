@@ -53,17 +53,18 @@ await tasks.create({ title: "Call plumber" });
 
 ### MCP server
 
-One command (needs Node 20+):
+Build from this repo. **Never `npx tc-mcp`**: that npm name is an unrelated project. Needs Node.js 20+ (LTS from nodejs.org) and Git.
 
 ```bash
-# DO NOT use npx tc-mcp (wrong package on npm). See TEAM-SETUP.md
+git clone https://github.com/detroitsection8/tenantcloud-mcp.git ~/tools/tenantcloud-mcp
+bash ~/tools/tenantcloud-mcp/setup.sh
 ```
 
-Restart Claude Code and ask things like "who owes rent?", "message the lead who inquired yesterday", or "create a maintenance request for unit 3B". The first time, the agent notices you are not signed in and offers to open a TenantCloud sign-in window (normal password + 2FA); tokens go to your OS credential store. To sign in ahead of time instead: `npx tc-mcp login`.
+`setup.sh` builds the tool, registers it with Claude Code (`claude mcp add --scope user --transport stdio tc-mcp -- node ~/tools/tenantcloud-mcp/packages/mcp/dist/cli.js mcp`; the trailing `mcp` is required), and opens the TenantCloud sign-in window. Each person signs in with their **own** TenantCloud login. Then fully quit and reopen Claude Code. Sign in again later with `node ~/tools/tenantcloud-mcp/packages/mcp/dist/cli.js login`. Full steps: [TEAM-SETUP.md](TEAM-SETUP.md).
 
 ### Hosted server (Claude on web, teams)
 
-For teammates on claude.ai, `tc-mcp serve` runs a multi-user remote server: OAuth 2.1 in front (claude.ai custom connector flow, email + invite code), an encrypted per-user TenantCloud token vault in Postgres, and per-person pairing via `tc-mcp login --remote`. Each teammate's tool calls run under their own TenantCloud account and permissions.
+For teammates on claude.ai, `tc-mcp serve` runs a multi-user remote server: OAuth 2.1 in front (claude.ai custom connector flow, email + invite code), an encrypted per-user TenantCloud token vault in Postgres, and per-person pairing via `node packages/mcp/dist/cli.js login --remote`. Each teammate's tool calls run under their own TenantCloud account and permissions.
 
 Each company hosts its own instance (fork or clone this repo - there is no shared multi-company server by design). Step-by-step Railway guide, including CLI commands and troubleshooting: [docs/DEPLOY_RAILWAY.md](docs/DEPLOY_RAILWAY.md).
 

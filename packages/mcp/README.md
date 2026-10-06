@@ -9,12 +9,12 @@ MCP server that lets AI agents (Claude Desktop, Claude Code, Cursor, any MCP cli
 One command (needs Node 20+):
 
 ```bash
-npx tc-mcp install claude-code   # or: claude-desktop
+bash setup.sh   # from the repo root; see TEAM-SETUP.md. Do NOT use npx tc-mcp (wrong npm package)
 ```
 
-Then restart Claude Code (or Claude Desktop) and start asking questions. No separate sign-in step: when you are not signed in, the agent tells you and offers to open a TenantCloud sign-in window (normal password + 2FA flow); tokens are stored in your OS credential store, never in files. Prefer to sign in ahead of time? `npx tc-mcp login`.
+Then restart Claude Code (or Claude Desktop) and start asking questions. No separate sign-in step: when you are not signed in, the agent tells you and offers to open a TenantCloud sign-in window (normal password + 2FA flow); tokens are stored in your OS credential store, never in files. Prefer to sign in ahead of time? `node packages/mcp/dist/cli.js login`.
 
-For other MCP clients, configure a stdio server that runs `npx tc-mcp mcp`.
+For other MCP clients, configure a stdio server that runs `node /path/to/repo/packages/mcp/dist/cli.js mcp`.
 
 Ask your agent things like:
 
