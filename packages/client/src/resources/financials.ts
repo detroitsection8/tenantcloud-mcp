@@ -165,16 +165,17 @@ export class FinancialsClient {
       .then((p) => parseJsonApiList(p).items);
   }
 
-  /** Record a manual payment against one or more invoices. */
-  async recordPayment(
-    attributes: Record<string, unknown>,
-    signal?: AbortSignal,
-  ): Promise<JsonApiRecord | null> {
-    const payload = await this.http.request("POST", "/transactions/payments", {
-      body: jsonApiBody("transaction_payment", attributes),
+  /**
+   * Record a manual payment against an invoice ("Mark as paid").
+   * The web app creates payments with POST /landlord/transactions/payments and a
+   * plain JSON body `{ payments: [{ transaction_id, client_id, date, amount, ... }] }`.
+   * (/transactions/payments is GET-only and rejects POST with 405.)
+   */
+  async recordPayment(attributes: Record<string, unknown>, signal?: AbortSignal): Promise<unknown> {
+    return this.http.request("POST", "/landlord/transactions/payments", {
+      body: { payments: [attributes] },
       signal,
     });
-    return parseJsonApiOne(payload);
   }
 
   bulkPayments(attributes: Record<string, unknown>, signal?: AbortSignal): Promise<unknown> {
