@@ -170,10 +170,22 @@ export class FinancialsClient {
    * The web app creates payments with POST /landlord/transactions/payments and a
    * plain JSON body `{ payments: [{ transaction_id, client_id, date, amount, ... }] }`.
    * (/transactions/payments is GET-only and rejects POST with 405.)
+   * `date` must be MM/dd/yyyy (ISO dates get HTTP 422), so YYYY-MM-DD is converted.
+   * Amounts above the invoice balance are capped to the balance by TenantCloud.
    */
   async recordPayment(attributes: Record<string, unknown>, signal?: AbortSignal): Promise<unknown> {
+    const payment: Record<string, unknown> = {
+      method: null,
+      method_details: null,
+      details: null,
+      files: [],
+      bank_account_id: null,
+      ...attributes,
+    };
+    const iso = typeof payment["date"] === "string" && /^(\d{4})-(\d{2})-(\d{2})$/.exec(payment["date"]);
+    if (iso) payment["date"] = `${iso[2]}/${iso[3]}/${iso[1]}`;
     return this.http.request("POST", "/landlord/transactions/payments", {
-      body: { payments: [attributes] },
+      body: { payments: [payment] },
       signal,
     });
   }
